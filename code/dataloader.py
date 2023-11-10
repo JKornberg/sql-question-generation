@@ -42,7 +42,7 @@ class PrecompDataset(data.Dataset):
         sql = []
         sql.append(self.vocab['<BEG>'])
         for token in sql_query:
-            if self.vocab.has_key(token.lower()):
+            if token.lower() in self.vocab:
                 sql.append(self.vocab[token.lower()])
             elif token=='EQL':
                 sql.append(self.vocab['='])
@@ -108,7 +108,7 @@ class PrecompDataset(data.Dataset):
                 mask.append(1)
                 template_tok.append(token)
 
-            if self.vocab.has_key(token.lower()):
+            if token.lower() in self.vocab:
                 question.append(self.vocab[token.lower()])
             else:
                 question.append(self.vocab['<UNK>'])
@@ -133,7 +133,7 @@ class PrecompDataset(data.Dataset):
         for token in template_tok:
             if token=='<SOS>':
                 template.append(self.vocab['<SOS>'])
-            elif self.vocab.has_key(token.lower()):
+            elif token.lower() in self.vocab:
                 template.append(self.vocab[token.lower()])
             else:
                 template.append(self.vocab['<UNK>'])

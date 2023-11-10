@@ -58,7 +58,7 @@ class EncoderRNN(nn.Module):
         input_sort = inputs.index_select(0, idx_sort.cuda())
 
         lengths_sort = list(lengths[idx_sort])
-
+        lengths_sort = [int(length) for length in lengths_sort]
         embedded_sort = self.embedding(input_sort)
         packed_embedded_sort = torch.nn.utils.rnn.pack_padded_sequence(embedded_sort, lengths_sort, batch_first=True)
         self.gru.flatten_parameters()
@@ -373,8 +373,8 @@ class QG(object):
 
         with open('../glove/word2idx.json') as inf:
             self.vocab = json.load(inf)
-        with open('../glove/usedwordemb.npy') as inf:
-            self.word_emb = np.load(inf)
+        #with open() as inf:
+        self.word_emb = np.load('../glove/usedwordemb.npy')
 
         self.question_encoder = EncoderRNN(self.vocab, self.word_emb, hidden_size)
 
