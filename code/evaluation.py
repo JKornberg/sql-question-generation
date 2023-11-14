@@ -125,7 +125,9 @@ def validate(args, val_loader, model):
                 tok=batch_outputs[j][tid]
                 hypothesis.append(vocab_inv[str(tok)])
             hypo=str(' '.join(hypothesis))
-            corpus_meteor_score+=meteor_score(ref, hypo)
+            #tokenize hypo
+#            breakpoint()
+            #corpus_meteor_score+=meteor_score(ref, hypo)
             rouge_scores += rouge.score(ref[0],hypo)['rougeL'][2]
         
         rouge_scores=rouge_scores/batch_size
